@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load staticfiles %}<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head -->
+    <title>MindSet</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'logo.png' %}"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.0.min.css">
+    {% include "registration/animation_login.html" %}
+</head>
+<body class="gradient_bg">
+  {% include "base_header.html" %}
+  {% include "base_background.html" %}
+  <div class="wrapper">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <div class="fadeIn first">
+            <img class="mt-4 mb-4" src="/static/logo.png" id="icon" alt="User Icon" style="height: 100px; width: 100px" />
+        </div>
+        <!-- Icon -->
+        {% if form.errors %}
+        <p class="bg-danger p-2">Some error in filling the form !</p>
+        {% endif %}
+        <form method="post" action="">
+            {% csrf_token %}
+            {# {form.as_p } #}
+            <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="Employee ID">
+            <input type="password" name="password1" required="" id="id_password1" placeholder="Password">
+            <input type="password" name="password2" required="" id="id_password2" placeholder="Confirm Password">
+            <input class="mt-3" type="submit" value="Submit" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <p><a href="{% url 'accounts:login' %}">Want to just SignIn?</a></p>
+        </div>
+    </div>
+</div>
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/popper-1.14.0.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.0.min.js"></script>
+</body>
+</html>
+
