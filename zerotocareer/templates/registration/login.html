@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load staticfiles %}<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- The above 3 meta tags *must* come first in the head -->
+	<title>MindSet</title>
+	<link rel="shortcut icon" type="image/png" href="{% static 'logo.png' %}"/>
+	<link rel="stylesheet" href="/static/css/bootstrap-4.1.0.min.css">
+	{% include "registration/animation_login.html" %}
+</head>
+
+<body class="gradient_bg">
+	{% include "base_header.html" %}
+	{% include "base_background.html" %}
+	
+	{% if form.errors %}
+	<div class="wrapper">
+		{% else %}
+		<div class="wrapper fadeInDown">
+			{% endif %}
+			<div id="formContent">
+				<!-- Tabs Titles -->
+
+				<!-- Icon -->
+				<div class="fadeIn first">
+					<img class="mb-4 mt-4" src="/static/logo.png" id="icon" alt="User Icon" style="height: 100px; width: 100px" />
+					{% if form.errors %}
+					<p class="bg-danger p-2">Please login with your credentials.</p>
+					{% endif %}
+				</div>
+
+				<!-- Login Form -->
+
+				<form method="post" action="{% url 'accounts:login' %}" autocomplete="off" >
+					{% csrf_token %}
+					<input type="text" id="login" class="fadeIn first" name="username" placeholder="Employee ID">
+					<input autocomplete = "off" type="password" id="password" class="fadeIn first" name="password" placeholder="Password">
+					<input type="submit" class="fadeIn first" value="login" />
+					<input type="hidden" name="next" value="{{ next }}" />
+				</form>{# Assumes you setup the password_reset view in your URLconf #}
+
+
+				<!-- Remind Passowrd -->
+				<div id="formFooter">
+					<p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script src="/static/js/jquery-3.2.1.min.js"></script>
+	<script src="/static/js/popper-1.14.0.min.js"></script>
+	<script src="/static/js/bootstrap-4.1.0.min.js"></script>
+</body>
+</html>
