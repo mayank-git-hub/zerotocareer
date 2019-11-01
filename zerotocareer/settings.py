@@ -30,20 +30,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.150']
 # REST FRAMEWORK
 
 REST_FRAMEWORK = {
-	'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-	'DEFAULT_PERMISSION_CLASSES': (
-		'rest_framework.permissions.AllowAny',
-	),
-}
-
-SWAGGER_SETTINGS = {
-	'USE_SESSION_AUTH': False,
-	'SECURITY_DEFINITIONS': {
-		'basic': {
-			'type': 'basic'
-		}
-	},
-	'JSON_EDITOR': True,
+	'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 
@@ -138,7 +125,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-	os.path.join(BASE_DIR, "static")
-]
