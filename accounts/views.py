@@ -1,14 +1,29 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.views import View
-from zerotocareer.database import users_history, user_info
-
-import datetime
+from zerotocareer.database import users
 
 from rest_framework_swagger import renderers
 from rest_framework.decorators import api_view, renderer_classes
+from zerotocareer.common_classes import JSONOpenAPIRender
+
+
+@api_view(['GET'])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
+def default_view(request):
+
+    if not request.user.is_authenticated:
+        redirect('/accounts/login')
+
+    return HttpResponse(
+        'This is the main page. <br>'
+        'Login page at /accounts/login <br>'
+        'Signup page at /accounts/sign_up <br>'
+        'Logout page at /accounts/logout <br>'
+        'Swagger page at /swagger <br>'
+    )
 
 
 class MySignUpView(View):
@@ -26,14 +41,9 @@ class MySignUpView(View):
         if form.is_valid():
             # <process form cleaned data>
 
-            user_info.insert_one({
-                'username': form.cleaned_data.get('username'),
+            users.insert_one({
+                'user_id': form.cleaned_data.get('username'),
                 'flows': [],
-            })
-            users_history.insert_one({
-                'username': form.cleaned_data.get('username'),
-                'click_history': ['login/sign_up'],
-                'click_time_history': [str(datetime.datetime.now())],
             })
             print('Created a new User', form.cleaned_data.get('username'))
             u = User.objects.create_user(
@@ -47,11 +57,17 @@ class MySignUpView(View):
         return render(request, self.template_name, {'form': form})
 
 
-@api_view(['GET', 'POST'])
-@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer])
+@api_view(['GET'])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def profile(request):
 
+    """
+
+    :param request: django request
+    :return:
+    """
+
     if not request.user.is_authenticated:
-        return redirect(request, '/accounts/login')
+        return redirect('/accounts/login')
 
     return redirect('/')

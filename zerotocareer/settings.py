@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+# TASK SETTINGS
+
+task = {
+	'active_people': 1,
+	'portal': 'https://www.zerotocareer.com/taskpage'
+}
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -32,6 +39,14 @@ ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.150']
 REST_FRAMEWORK = {
 	'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
+
+# EMAIL SETTINGS
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'leads@primeacademypune.com'
+EMAIL_HOST_PASSWORD = 'PN@leads'
 
 
 # Application definition

@@ -6,7 +6,7 @@ from django.contrib.auth.views import (
 )
 from .views import *
 
-app_name = 'login'
+app_name = 'accounts'
 urlpatterns = [
 	path('sign_up/', MySignUpView.as_view(), name='sign_up'),
 	path('login/', LoginView.as_view(template_name='accounts/login.html', redirect_authenticated_user=True), name="login"),
