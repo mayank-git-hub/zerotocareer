@@ -32,7 +32,7 @@ SECRET_KEY = 'm2d3jq0yd4!_0q*ac64cmgnk#f&mr9p2nc=ka2xi1ra3__*tv5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.150']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.150', 'dev.zerotocareer.com']
 
 # REST FRAMEWORK
 
@@ -42,12 +42,13 @@ REST_FRAMEWORK = {
 
 # EMAIL SETTINGS
 
+EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'leads@primeacademypune.com'
-EMAIL_HOST_PASSWORD = 'PN@leads'
-
+EMAIL_HOST_USER = 'development@zerotocareer.com'
+EMAIL_HOST_PASSWORD = 'fjtoqyrrymwzmrjx'
+# fjtoqyrrymwzmrjx
 
 # Application definition
 

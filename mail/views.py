@@ -19,23 +19,23 @@ from datetime import datetime
 @renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def test_mail(request):
 
-	try:
+	# try:
 
-		if not request.user.is_authenticated:
-			return redirect('/accounts/login')
+	if not request.user.is_authenticated:
+		return redirect('/accounts/login')
 
-		send_mail(
-			'Subject here',
-			'Here is the message.',
-			settings.EMAIL_HOST_USER,
-			['mayank25031998@gmail.com'],
-			fail_silently=False,
-		)
+	send_mail(
+		'Subject here',
+		'Here is the message.',
+		settings.EMAIL_HOST_USER,
+		['mayank25031998@gmail.com'],
+		fail_silently=False,
+	)
 
-		return HttpResponse('Success: Email Sent')
+	return HttpResponse('Success: Email Sent')
 
-	except:
-		return HttpResponse(sys.exc_info())
+	# except:
+	# 	return HttpResponse(sys.exc_info())
 
 
 @api_view(['GET'])
@@ -55,19 +55,6 @@ def task_join_time_mail(request):
 					break
 
 			scheduled_time = 0
-			email = """
-						Hello everyone!
-									
-						We are glad that you have waited patiently. 
-						Your task is scheduled on {0}. 
-						
-						The link to the test portal is: {1}. Login using your respective credentials.
-					
-						And remember the most important part of the task, having fun!
-						
-						Cheers and All the Best!
-					
-						ZeroToCareer team.""".format(scheduled_time, task['portal'])
 
 			waiting_user_ids = []
 			waiting_user_email_ids = []
@@ -85,20 +72,38 @@ def task_join_time_mail(request):
 				}
 			)
 
-			send_mail(
-				'Your Task is Scheduled: ZeroToCareer',
-				email,
-				settings.EMAIL_HOST_USER,
-				waiting_user_email_ids
-			)
-
 			# Clean up waiting list and fill up active list
 
-			for user_id in waiting_user_ids:
+			for user_id, email_id in zip(waiting_user_ids, waiting_user_email_ids):
+
+				password = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
+				email = """
+						Hello everyone!
+
+						We are glad that you have waited patiently. 
+						Your task is scheduled on {0}. 
+
+						The link to the test portal is: {1}. Login using your respective credentials.
+
+						Your git username is {2}
+						Your git password is {3}
+
+						And remember the most important part of the task, having fun!
+
+						Cheers and All the Best!
+
+						ZeroToCareer team.""".format(scheduled_time, task['portal'], user_id, password)
+
+				send_mail(
+					'Your Task is Scheduled: ZeroToCareer',
+					email,
+					settings.EMAIL_HOST_USER,
+					[email_id]
+				)
+
 				waiting.delete_one({'user_id': user_id})
 
-			for user_id in waiting_user_ids:
-				active.insert_one({'user_id': user_id})
+				active.insert_one({'user_id': user_id, 'git_password': password})
 
 			return HttpResponse('Success: Email Sent')
 
@@ -172,4 +177,5 @@ def task_over_confirmation_mail(request):
 		return HttpResponse('Success: Email Sent')
 
 	except:
+
 		return HttpResponse(sys.exc_info())
