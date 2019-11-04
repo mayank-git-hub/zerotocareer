@@ -41,8 +41,11 @@ class MySignUpView(View):
         if form.is_valid():
             # <process form cleaned data>
 
+            print('Email Is:', request.POST.get('email'))
+
             users.insert_one({
                 'user_id': form.cleaned_data.get('username'),
+                'email_id': request.POST.get('email'),
                 'flows': [],
             })
             print('Created a new User', form.cleaned_data.get('username'))

@@ -16,7 +16,8 @@ import os
 
 task = {
 	'active_people': 1,
-	'portal': 'https://www.zerotocareer.com/taskpage'
+	'portal': 'https://www.zerotocareer.com/taskpage',
+	'performance_url': 'https://www.zerotocareer.com/profile/performance'
 }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -142,5 +143,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
+	os.path.join(BASE_DIR, "static")
 ]

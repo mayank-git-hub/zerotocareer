@@ -19,27 +19,27 @@ from datetime import datetime
 @renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def test_mail(request):
 
-	# try:
+	try:
 
-	if not request.user.is_authenticated:
-		return redirect('/accounts/login')
+		if not request.user.is_authenticated:
+			return redirect('/accounts/login')
 
-	send_mail(
-		'Subject here',
-		'Here is the message.',
-		settings.EMAIL_HOST_USER,
-		['mayank25031998@gmail.com'],
-		fail_silently=False,
-	)
+		send_mail(
+			'Subject here',
+			'Here is the message.',
+			settings.EMAIL_HOST_USER,
+			['mayank25031998@gmail.com'],
+			fail_silently=False,
+		)
 
-	return HttpResponse('Success: Email Sent')
+		return HttpResponse('Success: Email Sent')
 
-	# except:
-	# 	return HttpResponse(sys.exc_info())
+	except:
+		return HttpResponse(sys.exc_info())
 
 
 @api_view(['GET'])
-@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def task_join_time_mail(request):
 
 	try:
@@ -115,13 +115,15 @@ def task_join_time_mail(request):
 
 
 @api_view(['GET'])
-@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def queue_join_confirmation_mail(request):
 
 	try:
 
 		if not request.user.is_authenticated:
-			redirect('/accounts/login')
+			return redirect('/accounts/login')
+
+		print(users.find_one({'user_id': request.user.username}))
 
 		email_id = users.find_one({'user_id': request.user.username})['email_id']
 
@@ -147,32 +149,36 @@ def queue_join_confirmation_mail(request):
 
 
 @api_view(['GET'])
-@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def task_over_confirmation_mail(request):
-
-	# ToDo - write confirmation emails
 
 	try:
 
 		if not request.user.is_authenticated:
-			redirect('/accounts/login')
+			return redirect('/accounts/login')
 
-		email_id = users.find_one({'user_id': request.user.username})['email_id']
+		cur_task = tasks.find_one({'status': 'active'})
 
-		message = """
-					You have been added to the queue! 
-					Please Be patient, we will send you an email when everyone is added with a link to the task portal. 
-		"""
+		for user_id in cur_task['users']:
 
-		send_mail(
-			'Added to the Queue: ZeroToCareer',
-			message,
-			settings.EMAIL_HOST_USER,
-			[email_id],
-			fail_silently=False,
-		)
+			email_id = users.find_one({'user_id': user_id})['email_id']
 
-		waiting.insert_one({'user_id': request.user.username})
+			message = """
+						Hope you enjoyed the test! To have a look at your performance visit:{}0
+			""".format(task['performance_url'])
+
+			send_mail(
+				'Added to the Queue: ZeroToCareer',
+				message,
+				settings.EMAIL_HOST_USER,
+				[email_id],
+				fail_silently=False,
+			)
+
+			active.delete_one({'user_id': user_id})
+
+		cur_task['status'] = 'done'
+		tasks.update_one({"status": 'active'}, {"$set": cur_task})
 
 		return HttpResponse('Success: Email Sent')
 
