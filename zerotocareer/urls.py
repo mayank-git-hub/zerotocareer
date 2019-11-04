@@ -24,5 +24,6 @@ urlpatterns = [
 	path('accounts/', include('accounts.urls', namespace='accounts')),
 	path('swagger/', schema_view),
 	path('mail/', include('mail.urls', namespace='mail')),
+	path('engine/', include('engine.urls', namespace='engine')),
 	path('', include('accounts.temporary_urls', namespace='temporary_urls')),
 ]

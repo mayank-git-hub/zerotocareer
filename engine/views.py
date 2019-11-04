@@ -19,14 +19,20 @@ def start_task(request):
 
 	for user in active.find():
 
-		os.system("echo mayank1 | sudo -S htpasswd /home/git/GitRepos/htpasswd " + str(user['user_id'] + ' ' + str(user['git_password'])))
+		create_user_command = \
+			"echo mayank1 | sudo -S htpasswd /home/git/GitRepos/htpasswd " + \
+			str(user['user_id'] + ' ' + str(user['git_password']))
+
+		print('Created github id for user:', user['user_id'])
+
+		os.system(create_user_command)
 
 	# Create Git Repository
 
 	commands = """
 		cd /home/git/GitRepos
 		echo mayank1 | sudo -S mkdir task.git
-		sudo cd task.git
+		cd task.git
 		sudo git --bare init
 		sudo git update-server-info
 		sudo chown -R root.root .
