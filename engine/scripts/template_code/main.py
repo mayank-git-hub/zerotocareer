@@ -14,6 +14,14 @@ def test_case_1(var1, var2):
 	# Sum
 	# Add the variables here
 
+	# Here I am adding some none sense from dev-zerotocareer for testing git log
+	x = 1
+	while True:
+		x += 1
+		if x == 100:
+			break
+	
+
 	return  # Put the return statement here
 
 @main.command()
