@@ -18,7 +18,7 @@ task = {
 	'active_people': 1,
 	'portal': 'https://www.zerotocareer.com/taskpage',
 	'performance_url': 'https://www.zerotocareer.com/profile/performance',
-	'wait_time': {'hr': 0, 'min': 1, 'sec': 10},
+	'wait_time': {'hr': 0, 'min': 0, 'sec': 2},
 }
 task['wait_time_seconds'] = int(task['wait_time']['hr']*3600 + task['wait_time']['min']*60 + task['wait_time']['sec'])
 

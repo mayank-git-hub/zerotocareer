@@ -24,6 +24,8 @@ def start_task():
 
 	task_id = tasks.find_one({'status': 'active'})['task_id']
 
+	print('Debug: task_id: {0}'.format(task_id))
+
 	commands = """
 		cd /home/git/GitRepos
 		echo mayank1 | sudo -S mkdir {0}.git
