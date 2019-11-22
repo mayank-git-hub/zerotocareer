@@ -17,8 +17,10 @@ import os
 task = {
 	'active_people': 1,
 	'portal': 'https://www.zerotocareer.com/taskpage',
-	'performance_url': 'https://www.zerotocareer.com/profile/performance'
+	'performance_url': 'https://www.zerotocareer.com/profile/performance',
+	'wait_time': {'hr': 0, 'min': 1, 'sec': 10},
 }
+task['wait_time_seconds'] = int(task['wait_time']['hr']*3600 + task['wait_time']['min']*60 + task['wait_time']['sec'])
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,14 +45,20 @@ REST_FRAMEWORK = {
 
 # EMAIL SETTINGS
 
-EMAIL_HOST = 'smtp-relay.gmail.com'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'development@zerotocareer.com'
-EMAIL_HOST_PASSWORD = 'fjtoqyrrymwzmrjx'
+# EMAIL_HOST = 'smtp-relay.gmail.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'development@zerotocareer.com'
+# EMAIL_HOST_PASSWORD = 'fjtoqyrrymwzmrjx'
 # fjtoqyrrymwzmrjx
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'giveitago.2543@gmail.com'
+EMAIL_HOST_PASSWORD = 'maythestarswatchoveryou'
 # Application definition
 
 INSTALLED_APPS = [
