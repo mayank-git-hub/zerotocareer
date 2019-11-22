@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, renderer_classes
 import sys
 from zerotocareer.settings import task
 from zerotocareer.common_classes import JSONOpenAPIRender
+from zerotocareer.database import users
 
 # Create your views here.
 
@@ -84,17 +85,18 @@ def queue_join_confirmation_mail(email_id):
 		return sys.exc_info()
 
 
-def task_over_confirmation_mail(users):
+def task_over_confirmation_mail(user_list, task_id):
 
 	try:
 
-		for user_id in users:
+		for user_id in user_list:
 
 			email_id = users.find_one({'user_id': user_id})['email_id']
 
 			message = """
-					Hope you enjoyed the test! To have a look at your performance visit:{}0
-			""".format(task['performance_url'])
+	Hope you enjoyed the test! To have a look at your performance visit:
+	http://dev.zerotocareer.com/accounts/profile/results?task_id={0}
+			""".format(task_id)
 
 			send_mail(
 				'Added to the Queue: ZeroToCareer',

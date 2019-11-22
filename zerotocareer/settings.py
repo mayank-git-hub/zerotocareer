@@ -18,7 +18,7 @@ task = {
 	'active_people': 1,
 	'portal': 'https://www.zerotocareer.com/taskpage',
 	'performance_url': 'https://www.zerotocareer.com/profile/performance',
-	'wait_time': {'hr': 0, 'min': 0, 'sec': 2},
+	'wait_time': {'hr': 0, 'min': 0, 'sec': 20},
 }
 task['wait_time_seconds'] = int(task['wait_time']['hr']*3600 + task['wait_time']['min']*60 + task['wait_time']['sec'])
 
@@ -53,7 +53,7 @@ REST_FRAMEWORK = {
 # EMAIL_HOST_PASSWORD = 'fjtoqyrrymwzmrjx'
 # fjtoqyrrymwzmrjx
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
