@@ -14,8 +14,6 @@ def start_task():
 
 		print('Created github id for user:', user['user_id'])
 
-		dormant.delete_one({'user_id': user['user_id']})
-		active.insert_one({'user_id': user['user_id']})
 		os.system(create_user_command)
 
 	create_root_command = "echo mayank1 | sudo -S htpasswd -b /home/git/GitRepos/htpasswd root root1"
@@ -29,7 +27,7 @@ def start_task():
 	commands = """
 		cd /home/git/GitRepos
 		echo mayank1 | sudo -S mkdir {0}.git
-		cd task.git
+		cd {0}.git
 		sudo git --bare init
 		sudo git update-server-info
 		sudo chown -R root.root .
@@ -39,6 +37,10 @@ def start_task():
 	os.system(commands)
 
 	initialize_repo(task_id)
+
+	for user in dormant.find():
+		dormant.delete_one({'user_id': user['user_id']})
+		active.insert_one({'user_id': user['user_id']})
 
 	return {'status': 'success', 'git_repo_name': '{0}.git'.format(task_id)}
 
