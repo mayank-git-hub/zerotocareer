@@ -11,25 +11,16 @@ def main():
 @click.option('-var2', '--var2', help='Variable 2', required=True)
 def test_case_1(var1, var2):
 
-	# Sum
-	# Add the variables here
+	# Sum	
 
-	# Here I am adding some none sense from dev-zerotocareer for testing git log
-	x = 1
-	while True:
-		x += 1
-		if x == 100:
-			break
-	
-
-	return  # Put the return statement here
+	print()  # Print the results here
 
 @main.command()
 @click.option('-var1', '--var1', help='Variable 1', required=True)
 def test_case_2(var1):
 
 	# Square
-	return
+	print()  # Print the results here
 
 
 @main.command()
@@ -38,7 +29,7 @@ def test_case_2(var1):
 def test_case_3(var1, var2):
 
 	# Power
-	return
+	print()  # Print the results here
 
 
 if __name__ == "__main__":

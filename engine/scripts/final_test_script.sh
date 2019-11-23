@@ -1,3 +1,5 @@
+# Self explainatory code
+
 base_dir='/home/mayank/temporary_git_repos/'$1
 cur_dir='/home/Common/GitRepos/new/zerotocareer/engine/scripts'
 git_repo=$1.
@@ -16,7 +18,7 @@ result6=$(python main.py test-case-3 --var1 5 --var2 4)
 
 if [[ $result1 == "" ]]
 then
-	result1=3
+	result1=None
 fi
 
 if [[ $result2 == "" ]]
@@ -31,7 +33,7 @@ fi
 
 if [[ $result4 == "" ]]
 then
-	result4=3
+	result4=None
 fi
 
 if [[ $result5 == "" ]]

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load staticfiles %}<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- The above 3 meta tags *must* come first in the head -->
+	<title>MindSet</title>
+	<link rel="shortcut icon" type="image/png" href="{% static 'logo.png' %}"/>
+	<link rel="stylesheet" href="/static/css/bootstrap-4.1.0.min.css">
+</head>
+
+<body class="gradient_bg">
+	{% include "basics/base_header.html" %}
+	{% include "basics/base_background.html" %}
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col text-center">
+				<p>Please have patience! We will send you the mail once everyone is onboard</p>
+			</div>
+		</div>
+	</div>
+	<div style="height: 70vh">
+	</div>
+	{% include "basics/base_footer.html" %}
+
+	<script src="/static/js/jquery-3.2.1.min.js"></script>
+	<script src="/static/js/popper-1.14.0.min.js"></script>
+	<script src="/static/js/bootstrap-4.1.0.min.js"></script>
+</body>
+</html>

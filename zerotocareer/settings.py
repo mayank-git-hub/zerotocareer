@@ -13,18 +13,17 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # TASK SETTINGS
+# These settings are specific to the MVP task
 
 task = {
 	'active_people': 1,
 	'portal': 'https://www.zerotocareer.com/taskpage',
-	'performance_url': 'https://www.zerotocareer.com/profile/performance',
-	'wait_time': {'hr': 0, 'min': 0, 'sec': 20},
+	'performance_url': 'https://www.zerotocareer.com/accouts/profile/results',
+	'wait_time': {'hr': 0, 'min': 0, 'sec': 2}, # Wait time will decide how much time the users remain dormant after the queue is full
 }
 task['wait_time_seconds'] = int(task['wait_time']['hr']*3600 + task['wait_time']['min']*60 + task['wait_time']['sec'])
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/

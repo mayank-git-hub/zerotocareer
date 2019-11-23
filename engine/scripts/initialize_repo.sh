@@ -1,3 +1,5 @@
+# Cloning the repository in a temporary folder, copying the template code and then commiting under the root user credentials
+
 base_dir='/home/mayank/temporary_git_repos/'
 git_repo=$1.
 git_repo_url=https://git.zerotocareer.com/$git_repo

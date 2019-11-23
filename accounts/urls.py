@@ -22,6 +22,7 @@ urlpatterns = [
 		name="password_reset_confirm"),
 	path('reset/done/', PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 	path('profile/', profile, name="profile"),
+	path('profile/results', profile_results, name='profile_results'),
 
 	# TODO
 	# path('profile/update', CustomProfileEditView.as_view(), name="update_porfile"),

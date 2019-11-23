@@ -1,29 +1,23 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.views import View
-from zerotocareer.database import users
+from django.contrib.auth.decorators import login_required
+
+from zerotocareer.database import users, accounts
 
 from rest_framework_swagger import renderers
 from rest_framework.decorators import api_view, renderer_classes
 from zerotocareer.common_classes import JSONOpenAPIRender
 
 
+@login_required
 @api_view(['GET'])
 @renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def default_view(request):
 
-    if not request.user.is_authenticated:
-        redirect('/accounts/login')
-
-    return HttpResponse(
-        'This is the main page. <br>'
-        'Login page at /accounts/login <br>'
-        'Signup page at /accounts/sign_up <br>'
-        'Logout page at /accounts/logout <br>'
-        'Swagger page at /swagger <br>'
-    )
+    return render(request, 'temporary/mainpage.html')
 
 
 class MySignUpView(View):
@@ -60,17 +54,31 @@ class MySignUpView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@login_required
 @api_view(['GET'])
 @renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
 def profile(request):
 
     """
-
+    Temporary! Always redirects to the base page
     :param request: django request
     :return:
     """
 
-    if not request.user.is_authenticated:
-        return redirect('/accounts/login')
-
     return redirect('/')
+
+
+@login_required
+@api_view(['GET'])
+@renderer_classes([renderers.OpenAPIRenderer, renderers.SwaggerUIRenderer, JSONOpenAPIRender])
+def profile_results(request):
+
+    """
+    Temporary! Shows the results for the task_id
+    :param request: django request
+    :return:
+    """
+    task_id = request.GET.get('task_id')
+    score = accounts.find_one({'user_id': request.user.username})['tasks'][task_id]
+
+    return render(request, 'accounts/profile/results.html', {'task_id': task_id, 'score': score})
